@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Berlayer Rise">
+  <rect width="64" height="64" rx="14" fill="#1f4e63"/>
+  <path d="M32 12 L54 31 h-6 v21 H16 V31 h-6 Z" fill="#f3e2d3"/>
+  <rect x="28" y="38" width="8" height="14" rx="1.5" fill="#c96f3b"/>
+</svg>

@@ -1,0 +1,128 @@
+{
+  "development": "Berlayer Rise",
+  "currency": "GBP",
+  "priceNote": "Guide prices only — replace with the official house details when provided. 示例价格，待官方房源资料替换。",
+  "dataNote": "Sample placeholder data for development; not an offer. 演示用示例数据，不构成要约。",
+  "units": [
+    {
+      "id": "A-101",
+      "type": "Type A",
+      "name": "Type A · 1 Bed Courtyard",
+      "bedrooms": 1, "bathrooms": 1, "areaSqm": 48, "floor": 0, "aspect": "E",
+      "priceFrom": 289000, "status": "available",
+      "tags": ["step-free", "courtyard"],
+      "features": ["Step-free access", "East-facing courtyard", "Open-plan kitchen"],
+      "grid": { "col": 0, "floor": 0 }
+    },
+    {
+      "id": "A-102",
+      "type": "Type A",
+      "name": "Type A · 1 Bed",
+      "bedrooms": 1, "bathrooms": 1, "areaSqm": 50, "floor": 0, "aspect": "W",
+      "priceFrom": 295000, "status": "available",
+      "tags": ["step-free", "quiet"],
+      "features": ["Step-free access", "Quiet courtyard aspect", "Fitted storage"],
+      "grid": { "col": 1, "floor": 0 }
+    },
+    {
+      "id": "B-101",
+      "type": "Type B",
+      "name": "Type B · 2 Bed Garden",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 72, "floor": 0, "aspect": "S",
+      "priceFrom": 372000, "status": "available",
+      "tags": ["step-free", "garden", "sunlight"],
+      "features": ["Private garden", "South-facing living room", "Two double bedrooms"],
+      "grid": { "col": 2, "floor": 0 }
+    },
+    {
+      "id": "B-102",
+      "type": "Type B",
+      "name": "Type B · 2 Bed Garden",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 74, "floor": 0, "aspect": "W",
+      "priceFrom": 368000, "status": "reserved",
+      "tags": ["garden", "sunset"],
+      "features": ["Private garden", "West-facing lounge", "Utility room"],
+      "grid": { "col": 3, "floor": 0 }
+    },
+    {
+      "id": "A-201",
+      "type": "Type A",
+      "name": "Type A · 1 Bed Balcony",
+      "bedrooms": 1, "bathrooms": 1, "areaSqm": 48, "floor": 1, "aspect": "E",
+      "priceFrom": 302000, "status": "available",
+      "tags": ["balcony"],
+      "features": ["Balcony", "Open-plan kitchen", "Lift access"],
+      "grid": { "col": 0, "floor": 1 }
+    },
+    {
+      "id": "C-201",
+      "type": "Type C",
+      "name": "Type C · 2 Bed Dual Aspect",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 81, "floor": 1, "aspect": "S",
+      "priceFrom": 415000, "status": "available",
+      "tags": ["dual-aspect", "balcony", "sunlight", "views"],
+      "features": ["Dual-aspect living space", "Balcony", "Two double bedrooms"],
+      "grid": { "col": 1, "floor": 1 }
+    },
+    {
+      "id": "B-202",
+      "type": "Type B",
+      "name": "Type B · 2 Bed",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 72, "floor": 1, "aspect": "W",
+      "priceFrom": 389000, "status": "available",
+      "tags": ["balcony", "quiet"],
+      "features": ["Balcony", "Quiet courtyard aspect", "Fitted storage"],
+      "grid": { "col": 2, "floor": 1 }
+    },
+    {
+      "id": "D-201",
+      "type": "Type D",
+      "name": "Type D · 3 Bed Family",
+      "bedrooms": 3, "bathrooms": 2, "areaSqm": 98, "floor": 1, "aspect": "S",
+      "priceFrom": 512000, "status": "available",
+      "tags": ["family", "balcony", "sunlight"],
+      "features": ["Family-sized living room", "Balcony", "En-suite main bedroom"],
+      "grid": { "col": 3, "floor": 1 }
+    },
+    {
+      "id": "A-301",
+      "type": "Type A",
+      "name": "Type A · 1 Bed High Floor",
+      "bedrooms": 1, "bathrooms": 1, "areaSqm": 52, "floor": 2, "aspect": "E",
+      "priceFrom": 318000, "status": "available",
+      "tags": ["views", "high-floor"],
+      "features": ["High-floor outlook", "Open-plan kitchen", "Lift access"],
+      "grid": { "col": 0, "floor": 2 }
+    },
+    {
+      "id": "C-301",
+      "type": "Type C",
+      "name": "Type C · 2 Bed Dual Aspect",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 81, "floor": 2, "aspect": "S",
+      "priceFrom": 448000, "status": "available",
+      "tags": ["dual-aspect", "views", "sunlight", "quiet"],
+      "features": ["Dual-aspect living space", "Elevated views", "Two double bedrooms"],
+      "grid": { "col": 1, "floor": 2 }
+    },
+    {
+      "id": "B-302",
+      "type": "Type B",
+      "name": "Type B · 2 Bed",
+      "bedrooms": 2, "bathrooms": 2, "areaSqm": 76, "floor": 2, "aspect": "W",
+      "priceFrom": 421000, "status": "reserved",
+      "tags": ["views", "balcony", "sunset"],
+      "features": ["Balcony with sunset views", "Fitted storage", "Lift access"],
+      "grid": { "col": 2, "floor": 2 }
+    },
+    {
+      "id": "D-302",
+      "type": "Type E",
+      "name": "Type E · 3 Bed Terrace",
+      "bedrooms": 3, "bathrooms": 2, "areaSqm": 110, "floor": 2, "aspect": "S",
+      "priceFrom": 598000, "status": "available",
+      "tags": ["family", "terrace", "views", "sunlight", "quiet"],
+      "features": ["Private roof terrace", "Elevated views", "En-suite main bedroom"],
+      "grid": { "col": 3, "floor": 2 }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Berlayer Rise · Virtual View &amp; Unit Recommendation</title>
+  <meta name="description" content="Berlayer Rise 云端 3D 看房与户型推荐 — cloud-based 3D virtual view and unit recommendation for future homeowners.">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">Berlayer Rise<small>Virtual View &amp; Unit Recommendation</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="#virtual-view">Virtual View · 云端看房</a>
+      <a href="#units">Units · 户型一览</a>
+      <a href="#recommend">Recommendation · 智能推荐</a>
+      <a href="#guide">Buyer Guide · 购房指导</a>
+    </nav>
+    <a class="btn btn-small" href="#recommend">Get Recommendation 获取推荐</a>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">New homes · 全新房源</p>
+        <h1>Walk through your future home before it is built.</h1>
+        <p class="hero-sub">云看房 · 三维虚拟看房 · 户型推荐<br>Explore Berlayer Rise in 3D from anywhere, compare units, and get practical buying guidance.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#virtual-view">Start Virtual Tour 开始看房</a>
+          <a class="btn btn-ghost" href="#guide">Buyer Guide 购房指导</a>
+        </div>
+        <ul class="hero-stats" id="hero-stats">
+          <li><strong id="stat-units">—</strong><span>Units on release · 在售户型</span></li>
+          <li><strong id="stat-types">—</strong><span>Layout types · 户型类型</span></li>
+          <li><strong id="stat-floors">—</strong><span>Floors · 楼层</span></li>
+        </ul>
+      </div>
+      <div class="hero-art">
+        <img src="assets/images/hero-placeholder.svg" alt="Illustration of the Berlayer Rise residential building">
+        <p class="img-note">Hero image placeholder · 效果图待上传后替换</p>
+      </div>
+    </section>
+
+    <section id="virtual-view" class="section">
+      <header class="section-head">
+        <h2>Virtual View <span class="zh">云端三维看房</span></h2>
+        <p>Drag to orbit, scroll to zoom, click a unit to select it. 拖拽旋转、滚轮缩放、点击户型查看详情。</p>
+      </header>
+      <div class="viewer-layout">
+        <div class="viewer-stage">
+          <canvas id="viewer-canvas" aria-label="Interactive 3D model of Berlayer Rise"></canvas>
+          <div class="viewer-fallback" id="viewer-fallback" hidden>
+            <p>3D 视图当前不可用（浏览器不支持 WebGL），请使用下方户型列表查看。3D view is unavailable in this browser (WebGL not supported).</p>
+          </div>
+          <p class="viewer-hint">Left-drag rotate · Right-drag pan · Scroll zoom · Click a home to select</p>
+        </div>
+        <aside class="viewer-side">
+          <label class="field">
+            <span>Select unit 选择户型</span>
+            <select id="unit-select"></select>
+          </label>
+          <article class="unit-detail" id="unit-detail">
+            <h3>Choose a unit</h3>
+            <p>从上方模型或下方列表中选择一个户型查看详情。Pick a unit in the model or the list below.</p>
+          </article>
+        </aside>
+      </div>
+    </section>
+    <section id="units" class="section">
+      <header class="section-head">
+        <h2>Units on Release <span class="zh">户型一览</span></h2>
+        <p>Sample showcase data — will be replaced with the official Berlayer Rise details. 当前为示例数据，待官方房源详细信息替换。</p>
+      </header>
+      <div class="unit-grid" id="unit-grid"></div>
+    </section>
+
+    <section id="recommend" class="section">
+      <header class="section-head">
+        <h2>Unit Recommendation <span class="zh">智能户型推荐</span></h2>
+        <p>Tell us your household, budget and priorities — we rank the units and explain why. 填写需求，获得排序推荐与理由。</p>
+      </header>
+      <form class="recommend-form" id="recommend-form">
+        <label class="field">
+          <span>Household 家庭人数</span>
+          <select id="pref-household" name="householdSize">
+            <option value="1">1 person · 1 人</option>
+            <option value="2" selected>2 people · 2 人</option>
+            <option value="3">3 people · 3 人</option>
+            <option value="4">4 people · 4 人</option>
+            <option value="5">5+ people · 5 人以上</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Budget (GBP) 预算（英镑）</span>
+          <input id="pref-budget" name="budget" type="number" min="0" step="5000" value="400000" inputmode="numeric">
+        </label>
+        <fieldset class="field field-wide">
+          <legend>Priorities 选房重点</legend>
+          <div class="chip-row">
+            <label class="chip"><input type="checkbox" name="priority" value="sunlight" checked> Sunlight 采光</label>
+            <label class="chip"><input type="checkbox" name="priority" value="quiet"> Quiet 安静</label>
+            <label class="chip"><input type="checkbox" name="priority" value="views"> Views 景观</label>
+            <label class="chip"><input type="checkbox" name="priority" value="accessibility"> Accessibility 无障碍</label>
+            <label class="chip"><input type="checkbox" name="priority" value="outdoor"> Outdoor space 户外空间</label>
+          </div>
+        </fieldset>
+        <div class="form-actions">
+          <button class="btn" type="submit">Recommend 推荐</button>
+          <button class="btn btn-ghost" type="reset">Reset 重置</button>
+        </div>
+      </form>
+      <ol class="recommend-results" id="recommend-results"></ol>
+    </section>
+
+    <section id="guide" class="section">
+      <header class="section-head">
+        <h2>Buyer Guide <span class="zh">购房指导</span></h2>
+        <p>Practical guidance for future homeowners before you commit. 给未来房主的实用选房建议。</p>
+      </header>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <h3>Orientation 朝向</h3>
+          <p>South and west-facing homes get the most daylight. 南向/西向采光更充足，冬天更暖；东向适合早起的住户。</p>
+        </article>
+        <article class="guide-card">
+          <h3>Floor level 楼层</h3>
+          <p>Lower floors suit step-free access and garden lovers; higher floors trade that for views and quiet. 低楼层方便出入、带花园；高楼层视野好、更安静。</p>
+        </article>
+        <article class="guide-card">
+          <h3>Total budget 总预算</h3>
+          <p>Leave room for service charges, furnishing and moving costs — not just the guide price. 除房价外，预留物业费、家具与搬家等费用。</p>
+        </article>
+        <article class="guide-card">
+          <h3>Future needs 未来需求</h3>
+          <p>Plan for a growing family or home office; an extra room today is cheaper than moving tomorrow. 考虑家庭成长与居家办公，多一间房比日后换房更省心。</p>
+        </article>
+        <article class="guide-card">
+          <h3>Noise &amp; views 噪音与景观</h3>
+          <p>Visit the plot at different times of day before deciding. 不同时段实地感受噪音与采光，再做决定。</p>
+        </article>
+        <article class="guide-card">
+          <h3>Resale value 转售价值</h3>
+          <p>Dual-aspect layouts, outdoor space and storage are the features buyers ask for first. 双面采光、户外空间与储物空间最受买家欢迎。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Berlayer Rise · Virtual View &amp; Unit Recommendation</strong>
+      <p>Cloud viewing &amp; unit recommendation for future homeowners · 面向未来房主的云端看房与户型推荐。</p>
+    </div>
+    <div>
+      <strong>Project records 项目记录</strong>
+      <p>
+        <a href="https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues">Issues</a> ·
+        <a href="https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pulls">Pull requests</a> ·
+        <a href="https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation">Repository</a>
+      </p>
+    </div>
+    <p class="fine-print">Showcase data is for demonstration only and will be updated with the official house information. 页面数据为演示用途，最终以官方房源资料为准。</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
+

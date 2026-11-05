@@ -1,0 +1,11 @@
+{
+  "name": "berlayer-rise-virtual-view",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloud-based 3D virtual view and unit recommendation for Berlayer Rise",
+  "scripts": {
+    "test": "node tests/recommend.test.mjs",
+    "serve": "python3 -m http.server 8000"
+  }
+}
