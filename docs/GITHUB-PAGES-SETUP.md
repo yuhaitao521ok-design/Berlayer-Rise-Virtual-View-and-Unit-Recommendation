@@ -13,9 +13,80 @@
 
 ## 方式 B：GitHub Actions 自动部署（测试 + 发布全自动）
 
-1. 把 [`ci/deploy.yml`](../ci/deploy.yml) 放到 **`.github/workflows/deploy.yml`**（网页端新建文件粘贴内容，或本地 git 提交均可）
-2. 打开 **Settings → Pages**，**Source** 选择 **GitHub Actions**
-3. 以后 push / 合并到 `main` 会自动运行推荐逻辑测试并发布；也可在 **Actions → Deploy to GitHub Pages → Run workflow** 手动触发
+### Q：仓库里找不到 `.github/workflows/` 文件夹？
+
+对，**这个文件夹默认不存在，需要新建一次**（自动化集成没有创建 workflow 文件的权限，属 GitHub 平台限制）。在 GitHub 网页端新建文件时，**在文件名框里输入带 `/` 的路径，GitHub 会自动把文件夹创建出来**，不需要你手动建文件夹。
+
+### 网页端分步操作（约 2 分钟）
+
+1. 打开仓库首页，确认左上角分支选择器是 **`main`**
+2. 点击 **Add file** ▾ → **Create new file**
+3. 在文件名输入框（"Name your file..."）里输入：`.github/workflows/deploy.yml`
+   - 每输入一个 `/` GitHub 都会自动生成一层文件夹，最终路径就是 `.github/workflows/deploy.yml`
+4. 把 [`ci/deploy.yml`](../ci/deploy.yml) 的内容复制进编辑框：
+   - 打开该文件 → 点右上角 **Copy raw file** 按钮；或直接复制下方「deploy.yml 全文」
+5. 点右上角 **Commit changes...** → 选 **Commit directly to the `main` branch** → **Commit changes**
+6. 打开 **Settings → Pages** → Build and deployment → Source 选 **GitHub Actions**
+7. 打开 **Actions** 页签 → **Deploy to GitHub Pages** → **Run workflow** 手动跑一次
+   - 若第 5 步提交时 Pages 还没启用，首次运行会报错；完成第 6 步后重跑即可。以后 push / 合并到 `main` 都是全自动
+
+<details>
+<summary>点开查看 deploy.yml 全文（与 ci/deploy.yml 相同）</summary>
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run recommendation logic tests
+        run: node tests/recommend.test.mjs
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html .nojekyll _site/
+          cp -r css js data assets _site/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+</details>
 
 > **为什么需要这一步？**
 > 当前仓库的自动化集成（GitHub App 令牌）没有 `workflows` 与 `pages`/`administration` 权限——GitHub 平台规定：GitHub App 提交 `.github/workflows/**` 文件与启用 Pages 必须拥有对应权限。因此这两项只能由仓库管理员操作一次；完成后即为全自动「push main → 自动部署」。
