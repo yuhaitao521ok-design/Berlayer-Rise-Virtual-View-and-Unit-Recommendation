@@ -73,6 +73,7 @@ node tests/recommend.test.mjs   # 或 npm test
 | --- | --- | --- | --- |
 | 2026-11-05 | 项目初始化：站点脚手架 + 3D 看房 + GitHub Pages 部署配置 | [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1) | [#2](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/2) |
 | 2026-11-05 | 修正发布启用指南 Issue 引用（#2 → #3） | [#4](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/4) | [#5](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/5) |
+| 2026-11-05 | 补充网页端创建 deploy.yml 的分步指引 | [#6](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/6) | [#7](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/7) |
 
 ## 后续计划 / Next
 
