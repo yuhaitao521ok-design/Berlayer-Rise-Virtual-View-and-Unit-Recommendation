@@ -121,16 +121,18 @@ function initInteractions() {
 function initViewer() {
   const canvas = $('#viewer-canvas');
   const fallback = $('#viewer-fallback');
+  const hint = $('.viewer-hint');
   const showError = () => {
     canvas.hidden = true;
     fallback.hidden = false;
+    if (hint) hint.hidden = true;
   };
   const viewer = createViewer({ canvas, units: state.units, onSelect: selectUnit, onError: showError });
-  if (!viewer) {
+  if (viewer) {
+    state.viewer = viewer;
+  } else {
     showError();
-    return;
   }
-  state.viewer = viewer;
   if (state.units.length > 0) selectUnit(state.units[0].id);
 }
 
