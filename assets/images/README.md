@@ -2,6 +2,8 @@
 
 等待上传的楼盘素材请放到本目录。命名规范：小写字母、数字、连字符，优先 WebP/JPG，单张建议 ≤ 500KB、长边 ≥ 1600px。
 
+> 原始素材（楼盘 PDF、沙盘原图）请先放 [`materials/`](../../materials/)（不随站点发布）；网页版图片由我处理后按下面的规范放入本目录。
+
 | 建议文件名 | 用途 | 用在哪里 |
 | --- | --- | --- |
 | `hero.jpg` / `hero.webp` | 首页主视觉效果图 | `index.html` 中 `.hero-art img`（替换 `hero-placeholder.svg`） |
