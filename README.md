@@ -74,6 +74,8 @@ node tests/recommend.test.mjs   # 或 npm test
 | 2026-11-05 | 项目初始化：站点脚手架 + 3D 看房 + GitHub Pages 部署配置 | [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1) | [#2](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/2) |
 | 2026-11-05 | 修正发布启用指南 Issue 引用（#2 → #3） | [#4](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/4) | [#5](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/5) |
 | 2026-11-05 | 补充网页端创建 deploy.yml 的分步指引 | [#6](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/6) | [#7](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/7) |
+| 2026-11-05 | 启用 GitHub Pages 发布（管理员操作）+ 线上验收 | [#3](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/3) | —（网页端启用，验收记录见 Issue） |
+| 2026-11-05 | 修复 3D 降级路径：详情自动填充 + 隐藏无效操作提示 | [#8](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/8) | [#9](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/9) |
 
 ## 后续计划 / Next
 
