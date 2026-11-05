@@ -71,7 +71,7 @@ node tests/recommend.test.mjs   # 或 npm test
 
 | 日期 | 任务 | Issue | Pull Request |
 | --- | --- | --- | --- |
-| 2026-11-05 | 项目初始化：站点脚手架 + 3D 看房 + GitHub Pages 自动部署 | [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1) | 本次 PR（合并后补全链接） |
+| 2026-11-05 | 项目初始化：站点脚手架 + 3D 看房 + GitHub Pages 部署配置 | [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1) | [#2](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/2) |
 
 ## 后续计划 / Next
 
