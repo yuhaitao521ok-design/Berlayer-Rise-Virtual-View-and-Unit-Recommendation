@@ -20,4 +20,4 @@
 > **为什么需要这一步？**
 > 当前仓库的自动化集成（GitHub App 令牌）没有 `workflows` 与 `pages`/`administration` 权限——GitHub 平台规定：GitHub App 提交 `.github/workflows/**` 文件与启用 Pages 必须拥有对应权限。因此这两项只能由仓库管理员操作一次；完成后即为全自动「push main → 自动部署」。
 >
-> 对应任务记录：Issue [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1)（项目初始化）、Issue [#2](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/2)（启用发布）。
+> 对应任务记录：Issue [#1](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/1)（项目初始化）、Issue [#3](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/3)（启用发布）。
