@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Berlayer Rise · Virtual View &amp; Unit Recommendation</title>
-  <meta name="description" content="Berlayer Rise 云端 3D 看房与户型推荐 — cloud-based 3D virtual view and unit recommendation for future homeowners.">
+  <title>Berlayar Rise · HDB BTO 云端看房与户型推荐</title>
+  <meta name="description" content="Berlayar Rise（HDB 2026 年 6 月 BTO · Prime 组屋）云端 3D 看房、沙盘实拍与智能户型推荐。紧邻 Telok Blangah MRT，6 座塔楼 1,976 个单位。">
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
   <link rel="stylesheet" href="css/styles.css">
   <script type="importmap">
@@ -20,13 +20,14 @@
   <header class="site-header">
     <a class="brand" href="#home">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-text">Berlayer Rise<small>Virtual View &amp; Unit Recommendation</small></span>
+      <span class="brand-text">Berlayar Rise<small>Virtual View &amp; Unit Recommendation</small></span>
     </a>
     <nav class="site-nav" aria-label="Main">
       <a href="#virtual-view">Virtual View · 云端看房</a>
-      <a href="#units">Units · 户型一览</a>
-      <a href="#recommend">Recommendation · 智能推荐</a>
-      <a href="#guide">Buyer Guide · 购房指导</a>
+      <a href="#sandbox">Sandtable · 沙盘实拍</a>
+      <a href="#units">Flat Types · 户型</a>
+      <a href="#recommend">Recommendation · 推荐</a>
+      <a href="#guide">Buyer Guide · 指南</a>
     </nav>
     <a class="btn btn-small" href="#recommend">Get Recommendation 获取推荐</a>
   </header>
@@ -34,62 +35,80 @@
   <main id="home">
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">New homes · 全新房源</p>
+        <p class="eyebrow">HDB BTO · 2026 年 6 月发售 · Prime 组屋</p>
         <h1>Walk through your future home before it is built.</h1>
-        <p class="hero-sub">云看房 · 三维虚拟看房 · 户型推荐<br>Explore Berlayer Rise in 3D from anywhere, compare units, and get practical buying guidance.</p>
+        <p class="hero-sub">云看房 · 三维虚拟看房 · 户型推荐<br>Berlayar Rise 紧邻 Telok Blangah MRT，6 座 33–49 层塔楼共 1,976 个单位，2-Room Flexi / 3-Room / 4-Room 三种户型可选。</p>
         <div class="hero-actions">
           <a class="btn" href="#virtual-view">Start Virtual Tour 开始看房</a>
-          <a class="btn btn-ghost" href="#guide">Buyer Guide 购房指导</a>
+          <a class="btn btn-ghost" href="#guide">Buyer Guide 购房指南</a>
         </div>
         <ul class="hero-stats" id="hero-stats">
-          <li><strong id="stat-units">—</strong><span>Units on release · 在售户型</span></li>
-          <li><strong id="stat-types">—</strong><span>Layout types · 户型类型</span></li>
-          <li><strong id="stat-floors">—</strong><span>Floors · 楼层</span></li>
+          <li><strong id="stat-blocks">—</strong><span>Residential blocks · 住宅楼栋</span></li>
+          <li><strong id="stat-units">—</strong><span>Units · 总单位</span></li>
+          <li><strong id="stat-types">—</strong><span>Flat types · 户型</span></li>
+          <li><strong id="stat-storeys">—</strong><span>Storeys · 楼层</span></li>
         </ul>
       </div>
       <div class="hero-art">
-        <img src="assets/images/hero-placeholder.svg" alt="Illustration of the Berlayer Rise residential building">
-        <p class="img-note">Hero image placeholder · 效果图待上传后替换</p>
+        <img src="assets/images/sandbox-02.jpg" alt="Berlayar Rise 沙盘实拍：四座塔楼与中央景观庭院">
+        <p class="img-note">沙盘实拍 · 建筑商模型（来源 materials/photos）</p>
+      </div>
+    </section>
+
+    <section id="sandbox" class="section">
+      <header class="section-head">
+        <h2>Sandtable Photos <span class="zh">沙盘实拍</span></h2>
+        <p>建筑商售楼处沙盘模型实拍：6 座塔楼、空中花园、多层停车场与配套建筑一览无余。</p>
+      </header>
+      <div class="gallery">
+        <figure><img src="assets/images/sandbox-01.jpg" alt="Blk 200A/200B/201A/201B 塔楼近景" loading="lazy"><figcaption>Blk 200A / 200B / 201A / 201B 塔楼近景，可见空中花园层</figcaption></figure>
+        <figure><img src="assets/images/sandbox-02.jpg" alt="小区全景与 Berlayar Street" loading="lazy"><figcaption>小区全景：中央景观庭院，前景 Berlayar Street（在建）</figcaption></figure>
+        <figure><img src="assets/images/sandbox-03.jpg" alt="沙盘方位：Telok Blangah Road 与 West Coast Highway" loading="lazy"><figcaption>项目方位：Telok Blangah Road 与 West Coast Highway</figcaption></figure>
+        <figure><img src="assets/images/sandbox-04.jpg" alt="全盘俯瞰" loading="lazy"><figcaption>全盘俯瞰：6 座塔楼与圆形配套建筑、多层停车场</figcaption></figure>
+        <figure class="tall"><img src="assets/images/sandbox-05.jpg" alt="Blk 204B 与 Blk 203" loading="lazy"><figcaption>Blk 204B 塔楼与 Blk 203 圆形建筑、前庭广场</figcaption></figure>
+        <figure><img src="assets/images/sandbox-06.jpg" alt="多层停车场屋顶花园" loading="lazy"><figcaption>6 层停车场（MSCP）屋顶花园与塔楼群</figcaption></figure>
+        <figure class="tall"><img src="assets/images/sandbox-07.jpg" alt="Berlayar Rise 沙盘实拍" loading="lazy"><figcaption>沙盘实拍 · Berlayar Rise 建筑商模型</figcaption></figure>
       </div>
     </section>
 
     <section id="virtual-view" class="section">
       <header class="section-head">
         <h2>Virtual View <span class="zh">云端三维看房</span></h2>
-        <p>Drag to orbit, scroll to zoom, click a unit to select it. 拖拽旋转、滚轮缩放、点击户型查看详情。</p>
+        <p>6 座塔楼按真实楼层数建模（Blk 200A 46 层 … 204B 33 层），白色横带为空中花园层、顶层绿块为屋顶花园；点击彩色户型块查看该户型详情。体量比例为示意。</p>
       </header>
       <div class="viewer-layout">
         <div class="viewer-stage">
-          <canvas id="viewer-canvas" aria-label="Interactive 3D model of Berlayer Rise"></canvas>
+          <canvas id="viewer-canvas" aria-label="Interactive 3D massing model of Berlayar Rise"></canvas>
           <div class="viewer-fallback" id="viewer-fallback" hidden>
-            <p>3D 视图当前不可用（浏览器不支持 WebGL），请使用下方户型列表查看。3D view is unavailable in this browser (WebGL not supported).</p>
+            <p>3D 视图当前不可用（浏览器不支持 WebGL），请使用下方「沙盘实拍」与户型列表查看。3D view is unavailable in this browser (WebGL not supported).</p>
           </div>
-          <p class="viewer-hint">Left-drag rotate · Right-drag pan · Scroll zoom · Click a home to select</p>
+          <p class="viewer-hint">Left-drag rotate · Right-drag pan · Scroll zoom · Click a colour block to select</p>
         </div>
         <aside class="viewer-side">
           <label class="field">
-            <span>Select unit 选择户型</span>
+            <span>Select flat type 选择户型</span>
             <select id="unit-select"></select>
           </label>
           <article class="unit-detail" id="unit-detail">
-            <h3>Choose a unit</h3>
-            <p>从上方模型或下方列表中选择一个户型查看详情。Pick a unit in the model or the list below.</p>
+            <h3>Choose a flat type</h3>
+            <p>从模型或下方列表中选择一个户型查看详情。Pick a flat type in the model or the list below.</p>
           </article>
         </aside>
       </div>
     </section>
+
     <section id="units" class="section">
       <header class="section-head">
-        <h2>Units on Release <span class="zh">户型一览</span></h2>
-        <p>Sample showcase data — will be replaced with the official Berlayer Rise details. 当前为示例数据，待官方房源详细信息替换。</p>
+        <h2>Flat Types <span class="zh">户型一览</span></h2>
+        <p>户型与套号（stacks）来自 HDB 官方手册 UNIT DISTRIBUTION 页；价格以发售公告为准。</p>
       </header>
       <div class="unit-grid" id="unit-grid"></div>
     </section>
 
     <section id="recommend" class="section">
       <header class="section-head">
-        <h2>Unit Recommendation <span class="zh">智能户型推荐</span></h2>
-        <p>Tell us your household, budget and priorities — we rank the units and explain why. 填写需求，获得排序推荐与理由。</p>
+        <h2>Flat-Type Recommendation <span class="zh">智能户型推荐</span></h2>
+        <p>告诉我们家庭人数与偏好，按真实数据为你排序户型并给出理由。BTO 价格待发售公告，预算仅作参考。</p>
       </header>
       <form class="recommend-form" id="recommend-form">
         <label class="field">
@@ -103,17 +122,17 @@
           </select>
         </label>
         <label class="field">
-          <span>Budget (GBP) 预算（英镑）</span>
-          <input id="pref-budget" name="budget" type="number" min="0" step="5000" value="400000" inputmode="numeric">
+          <span>Budget (SGD, 可选参考) 预算</span>
+          <input id="pref-budget" name="budget" type="number" min="0" step="5000" value="450000" inputmode="numeric">
         </label>
         <fieldset class="field field-wide">
           <legend>Priorities 选房重点</legend>
           <div class="chip-row">
-            <label class="chip"><input type="checkbox" name="priority" value="sunlight" checked> Sunlight 采光</label>
-            <label class="chip"><input type="checkbox" name="priority" value="quiet"> Quiet 安静</label>
-            <label class="chip"><input type="checkbox" name="priority" value="views"> Views 景观</label>
-            <label class="chip"><input type="checkbox" name="priority" value="accessibility"> Accessibility 无障碍</label>
-            <label class="chip"><input type="checkbox" name="priority" value="outdoor"> Outdoor space 户外空间</label>
+            <label class="chip"><input type="checkbox" name="priority" value="space" checked> 宽敞布局 Space</label>
+            <label class="chip"><input type="checkbox" name="priority" value="views"> 高层视野 Views</label>
+            <label class="chip"><input type="checkbox" name="priority" value="flexi"> 短租可选 Flexi lease</label>
+            <label class="chip"><input type="checkbox" name="priority" value="choice"> 多楼栋可选 More choices</label>
+            <label class="chip"><input type="checkbox" name="priority" value="value"> 小户型上车 Value</label>
           </div>
         </fieldset>
         <div class="form-actions">
@@ -126,33 +145,33 @@
 
     <section id="guide" class="section">
       <header class="section-head">
-        <h2>Buyer Guide <span class="zh">购房指导</span></h2>
-        <p>Practical guidance for future homeowners before you commit. 给未来房主的实用选房建议。</p>
+        <h2>Buyer Guide <span class="zh">购房指南</span></h2>
+        <p>针对 Berlayar Rise（Prime BTO）的实用选房建议，给未来的屋主。</p>
       </header>
       <div class="guide-grid">
         <article class="guide-card">
-          <h3>Orientation 朝向</h3>
-          <p>South and west-facing homes get the most daylight. 南向/西向采光更充足，冬天更暖；东向适合早起的住户。</p>
+          <h3>Prime 组屋条款</h3>
+          <p>Prime 户型设有家庭月收入上限、10 年最低居住期（MOP）与转售限制（含补贴回收）。申请前先在 HDB 官网核对资格。</p>
         </article>
         <article class="guide-card">
-          <h3>Floor level 楼层</h3>
-          <p>Lower floors suit step-free access and garden lovers; higher floors trade that for views and quiet. 低楼层方便出入、带花园；高楼层视野好、更安静。</p>
+          <h3>抽签与套号</h3>
+          <p>BTO 采用抽签制：4-Room 分布在全部 6 座楼栋、套号最多；2-Room Flexi (Type 2) 也有 4 座楼栋可选。</p>
         </article>
         <article class="guide-card">
-          <h3>Total budget 总预算</h3>
-          <p>Leave room for service charges, furnishing and moving costs — not just the guide price. 除房价外，预留物业费、家具与搬家等费用。</p>
+          <h3>短租期选项</h3>
+          <p>2-Room Flexi 可选 55/45 年短租期，月供与 CPF 支出更低，适合年长买家；99 年租期则适合长期自住与家庭。</p>
         </article>
         <article class="guide-card">
-          <h3>Future needs 未来需求</h3>
-          <p>Plan for a growing family or home office; an extra room today is cheaper than moving tomorrow. 考虑家庭成长与居家办公，多一间房比日后换房更省心。</p>
+          <h3>可选组件 OCS</h3>
+          <p>厨房橱柜、地板等可选组件（Optional Component Scheme）费用会并入房价，交房前按需勾选、量力而行。</p>
         </article>
         <article class="guide-card">
-          <h3>Noise &amp; views 噪音与景观</h3>
-          <p>Visit the plot at different times of day before deciding. 不同时段实地感受噪音与采光，再做决定。</p>
+          <h3>周边配套</h3>
+          <p>紧邻 Telok Blangah MRT；6 层 MSCP 设超市、食阁与商铺、屋顶花园；Telok Blangah Beacon 新巴刹与熟食中心预计 2027 年落成。</p>
         </article>
         <article class="guide-card">
-          <h3>Resale value 转售价值</h3>
-          <p>Dual-aspect layouts, outdoor space and storage are the features buyers ask for first. 双面采光、户外空间与储物空间最受买家欢迎。</p>
+          <h3>教育与自然</h3>
+          <p>名校包括 Blangah Rise Primary、CHIJ St. Theresa's Convent、Radin Mas Primary、CHIJ (Kellock)；毗邻 Southern Ridges 与多条公园连道。</p>
         </article>
       </div>
     </section>
@@ -160,8 +179,8 @@
 
   <footer class="site-footer">
     <div>
-      <strong>Berlayer Rise · Virtual View &amp; Unit Recommendation</strong>
-      <p>Cloud viewing &amp; unit recommendation for future homeowners · 面向未来房主的云端看房与户型推荐。</p>
+      <strong>Berlayar Rise · Virtual View &amp; Unit Recommendation</strong>
+      <p>面向未来屋主的云端看房与户型推荐 · 位于 Berlayar Street / Berlayar Drive，大南部水岸（Greater Southern Waterfront）。</p>
     </div>
     <div>
       <strong>Project records 项目记录</strong>
@@ -171,10 +190,9 @@
         <a href="https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation">Repository</a>
       </p>
     </div>
-    <p class="fine-print">Showcase data is for demonstration only and will be updated with the official house information. 页面数据为演示用途，最终以官方房源资料为准。</p>
+    <p class="fine-print">资料来源：HDB 2026 年 6 月 BTO 销售手册（Berlayar Rise）与建筑商沙盘实拍；价格与面积以 HDB 官方发售公告为准。Source: HDB June 2026 BTO brochure &amp; builder's sandtable model.</p>
   </footer>
 
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
-
