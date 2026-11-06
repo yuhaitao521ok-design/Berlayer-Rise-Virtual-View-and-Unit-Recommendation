@@ -145,6 +145,27 @@ function initViewer() {
   if (state.units.length > 0) selectUnit(state.units[0].id);
 }
 
+function initFullscreen() {
+  const layout = $('.viewer-layout');
+  const button = $('#viewer-fullscreen');
+  if (!layout || !button) return;
+  const requestFs = layout.requestFullscreen || layout.webkitRequestFullscreen;
+  const exitFs = document.exitFullscreen || document.webkitExitFullscreen;
+  const current = () => document.fullscreenElement || document.webkitFullscreenElement;
+  button.addEventListener('click', () => {
+    if (current()) {
+      if (exitFs) exitFs.call(document);
+    } else if (requestFs) {
+      requestFs.call(layout);
+    }
+  });
+  const sync = () => {
+    button.textContent = current() ? '✕ 退出全屏 Exit' : '⛶ 全屏 Fullscreen';
+  };
+  document.addEventListener('fullscreenchange', sync);
+  document.addEventListener('webkitfullscreenchange', sync);
+}
+
 async function init() {
   try {
     const response = await fetch('data/units.json');
@@ -157,6 +178,7 @@ async function init() {
     renderUnitSelect();
     initInteractions();
     initViewer();
+    initFullscreen();
   } catch (error) {
     $('#unit-grid').innerHTML = `<p class="unit-detail">无法加载房源数据（${error.message}），请稍后重试。</p>`;
   }

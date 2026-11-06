@@ -78,6 +78,7 @@ node tests/recommend.test.mjs   # 或 npm test
 | 2026-11-05 | 补充网页端创建 deploy.yml 的分步指引 | [#6](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/6) | [#7](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/7) |
 | 2026-11-05 | 启用 GitHub Pages 发布（管理员操作）+ 线上验收 | [#3](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/3) | —（网页端启用，验收记录见 Issue） |
 | 2026-11-06 | 接入真实资料：Berlayar Rise 数据与沙盘实拍 | [#12](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/12) | [#13](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/13) |
+| 2026-11-06 | 3D 云看房视图放大 + 一键网页全屏 | [#14](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/14) | [#15](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/15) |
 | 2026-11-05 | 修复 3D 降级路径：详情自动填充 + 隐藏无效操作提示 | [#8](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/8) | [#9](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/9) |
 | 2026-11-05 | 创建原始素材存放目录 materials/（PDF + 沙盘照片） | [#10](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/10) | [#11](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/11) |
 
