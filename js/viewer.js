@@ -1,15 +1,18 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const UNIT_W = 6;
-const UNIT_H = 3;
-const UNIT_D = 7;
-const COL_GAP = 1.4;
+const FLOOR_H = 0.62;
+const TOWER_W = 9;
+const TOWER_D = 9;
+const TOWER_GAP = 3.2;
 
-function baseColor(unit) {
-  const palette = ['#e9d7bd', '#f0e3cd', '#f5ecdd'];
-  return palette[unit.floor % palette.length];
-}
+/** Sample-unit colours echo the HDB brochure legend. */
+const TYPE_COLORS = {
+  '2RF-T1': '#f6b26b',
+  '2RF-T2': '#e07b5f',
+  '3R': '#9fc98a',
+  '4R': '#f2d96b',
+};
 
 function addTree(scene, x, z, scale = 1) {
   const trunk = new THREE.Mesh(
@@ -27,7 +30,7 @@ function addTree(scene, x, z, scale = 1) {
   scene.add(trunk, leaves);
 }
 
-export function createViewer({ canvas, units, onSelect, onError }) {
+export function createViewer({ canvas, blocks = [], units = [], onSelect, onError }) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -44,33 +47,33 @@ export function createViewer({ canvas, units, onSelect, onError }) {
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#dce8f0');
-  scene.fog = new THREE.Fog('#dce8f0', 70, 190);
+  scene.fog = new THREE.Fog('#dce8f0', 120, 340);
 
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 400);
-  camera.position.set(27, 19, 31);
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 800);
+  camera.position.set(54, 44, 68);
 
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 6, 0);
+  controls.target.set(0, 18, 0);
   controls.enableDamping = true;
   controls.maxPolarAngle = Math.PI * 0.49;
-  controls.minDistance = 14;
-  controls.maxDistance = 110;
+  controls.minDistance = 26;
+  controls.maxDistance = 200;
 
   scene.add(new THREE.HemisphereLight('#eaf4ff', '#b7c7a6', 0.9));
   const sun = new THREE.DirectionalLight('#fff2df', 1.5);
-  sun.position.set(32, 46, 20);
+  sun.position.set(70, 110, 50);
   sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048);
   const shadowCam = sun.shadow.camera;
-  shadowCam.left = -50;
-  shadowCam.right = 50;
-  shadowCam.top = 50;
-  shadowCam.bottom = -50;
-  shadowCam.far = 160;
+  shadowCam.left = -130;
+  shadowCam.right = 130;
+  shadowCam.top = 130;
+  shadowCam.bottom = -130;
+  shadowCam.far = 420;
   scene.add(sun);
 
   const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(200, 200),
+    new THREE.PlaneGeometry(460, 460),
     new THREE.MeshStandardMaterial({ color: '#c9d6b8', roughness: 1 })
   );
   ground.rotation.x = -Math.PI / 2;
@@ -78,63 +81,73 @@ export function createViewer({ canvas, units, onSelect, onError }) {
   scene.add(ground);
 
   const path = new THREE.Mesh(
-    new THREE.BoxGeometry(12, 0.12, 120),
+    new THREE.BoxGeometry(16, 0.12, 200),
     new THREE.MeshStandardMaterial({ color: '#cfc6b6', roughness: 1 })
   );
-  path.position.set(0, 0.06, 18);
+  path.position.set(0, 0.06, 42);
   path.receiveShadow = true;
   scene.add(path);
 
-  [-24, -16, 16, 24].forEach((x, i) => addTree(scene, x, 10 + (i % 2) * 8, 1 + (i % 3) * 0.18));
-  [-26, -18, 18, 26].forEach((x, i) => addTree(scene, x, -10 - (i % 2) * 6, 1.1 + (i % 2) * 0.2));
+  [-46, -30, 30, 46].forEach((x, i) => addTree(scene, x, 26 + (i % 2) * 12, 1 + (i % 3) * 0.18));
+  [-48, -32, 32, 48].forEach((x, i) => addTree(scene, x, -20 - (i % 2) * 10, 1.1 + (i % 2) * 0.2));
+
+  // Six residential blocks with real storey counts (massing is indicative).
+  const towerSpacing = TOWER_W + TOWER_GAP;
+  const baseX = -((blocks.length - 1) * towerSpacing) / 2;
+  const towerMaterial = new THREE.MeshStandardMaterial({ color: '#8d9aa8', roughness: 0.68, metalness: 0.08 });
+  const finMaterial = new THREE.MeshStandardMaterial({ color: '#5c6b7a', roughness: 0.7, metalness: 0.1 });
+  const terraceMaterial = new THREE.MeshStandardMaterial({ color: '#e8e2d2', roughness: 0.9 });
+  const roofMaterial = new THREE.MeshStandardMaterial({ color: '#7fa267', roughness: 1 });
+
+  blocks.forEach((block, index) => {
+    const x = baseX + index * towerSpacing;
+    const height = block.storeys * FLOOR_H;
+    const tower = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W, height, TOWER_D), towerMaterial);
+    tower.position.set(x, height / 2, 0);
+    tower.castShadow = true;
+    tower.receiveShadow = true;
+    scene.add(tower);
+
+    const fin = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W * 0.45, height, TOWER_D + 0.5), finMaterial);
+    fin.position.set(x, height / 2, 0);
+    fin.castShadow = true;
+    scene.add(fin);
+
+    for (const storey of block.skyTerraces || []) {
+      const slab = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 1.4, 0.5, TOWER_D + 1.4), terraceMaterial);
+      slab.position.set(x, storey * FLOOR_H, 0);
+      slab.castShadow = true;
+      scene.add(slab);
+    }
+
+    if (block.roofGarden) {
+      const roof = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 1.2, 0.7, TOWER_D + 1.2), roofMaterial);
+      roof.position.set(x, height + 0.35, 0);
+      roof.castShadow = true;
+      scene.add(roof);
+    }
+  });
+
+  // Clickable flat-type sample units, placed on blocks where they really exist.
   const meshes = [];
   const byId = new Map();
   const baseColors = new Map();
   for (const unit of units) {
-    const grid = unit.grid || { col: 0, floor: 0 };
-    const x = (grid.col - 1.5) * (UNIT_W + COL_GAP);
-    const y = grid.floor * UNIT_H + UNIT_H / 2 + 0.25;
-    const material = new THREE.MeshStandardMaterial({
-      color: baseColor(unit),
-      roughness: 0.72,
-      metalness: 0.04,
-    });
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(UNIT_W, UNIT_H, UNIT_D), material);
+    const blockId = unit.grid && unit.grid.block;
+    const blockIndex = Math.max(0, blocks.findIndex((b) => b.id === blockId));
+    const x = baseX + blockIndex * towerSpacing;
+    const y = (unit.grid && unit.grid.floor ? unit.grid.floor : 10) * FLOOR_H;
+    const color = TYPE_COLORS[unit.id] || '#f6b26b';
+    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.55 });
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 1, 2.2, TOWER_D + 1), material);
     mesh.position.set(x, y, 0);
     mesh.castShadow = true;
-    mesh.receiveShadow = true;
     mesh.userData.unitId = unit.id;
     scene.add(mesh);
     meshes.push(mesh);
     byId.set(unit.id, { mesh, unit });
-    baseColors.set(unit.id, material.color.getHex());
-
-    if (unit.tags.some((tag) => ['balcony', 'terrace', 'garden'].includes(tag))) {
-      const slab = new THREE.Mesh(
-        new THREE.BoxGeometry(UNIT_W * 0.8, 0.18, 1.6),
-        new THREE.MeshStandardMaterial({ color: '#d8c9ae', roughness: 0.9 })
-      );
-      slab.position.set(x, y - UNIT_H / 2 + 0.12, UNIT_D / 2 + 0.8);
-      slab.castShadow = true;
-      scene.add(slab);
-    }
+    baseColors.set(unit.id, color);
   }
-
-  const roof = new THREE.Mesh(
-    new THREE.BoxGeometry(UNIT_W * 4 + COL_GAP * 3 + 1.2, 0.5, UNIT_D + 1.2),
-    new THREE.MeshStandardMaterial({ color: '#b9a98e', roughness: 0.9 })
-  );
-  roof.position.set(0, 3 * UNIT_H + 0.75, 0);
-  roof.castShadow = true;
-  scene.add(roof);
-
-  const canopy = new THREE.Mesh(
-    new THREE.BoxGeometry(10, 0.3, 4),
-    new THREE.MeshStandardMaterial({ color: '#1f4e63', roughness: 0.6 })
-  );
-  canopy.position.set(0, 3.2, UNIT_D / 2 + 2.6);
-  canopy.castShadow = true;
-  scene.add(canopy);
 
   let selectedId = null;
   function highlight(unitId) {

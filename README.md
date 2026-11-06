@@ -55,17 +55,19 @@ node tests/recommend.test.mjs   # 或 npm test
 - **房源图片**：放入 `assets/images/`，命名规范见 [assets/images/README.md](assets/images/README.md)；上传后把 `index.html` 中的 `hero-placeholder.svg` 等占位图路径替换即可
 - **房源详细信息**：编辑 [`data/units.json`](data/units.json)
 
-### `units.json` 字段说明
+### `units.json` 字段说明（v2 · 真实数据）
 
 | 字段 | 说明 |
 | --- | --- |
-| `id` / `type` / `name` | 户型编号、类型、展示名称 |
-| `bedrooms` / `bathrooms` / `areaSqm` | 卧室数、卫生间数、建筑面积（㎡） |
-| `floor` / `aspect` | 楼层（从 0 起）、朝向（N/S/E/W） |
-| `priceFrom` / `status` | 指导价（GBP）、状态（`available` / `reserved` / `sold`） |
-| `tags` | 推荐引擎匹配标签（如 `step-free` / `balcony` / `quiet` / `views` / `sunlight`） |
-| `features` | 卡片展示的卖点列表 |
-| `grid` | 3D 模型中的位置：`col` 列、`floor` 层（需与 `floor` 一致） |
+| `stats` / `blocks` | 项目统计与 6 座楼栋（真实楼层数、空中花园层、屋顶花园） |
+| `id` / `type` / `name` | 户型编号（如 `2RF-T1`）、类型、展示名称 |
+| `bedrooms` / `bathrooms` | 卧室、浴室数量（来自官方平面图布局） |
+| `areaSqm` | 建筑面积（㎡）——以 HDB 发售资料标注为准，未公布时为 `null` |
+| `lease` / `priceFrom` | 租期说明、参考价（未公布为 `null`，页面显示「价格待发售公告」） |
+| `layout` / `features` | 平面图房间构成、卡片卖点 |
+| `blocks` / `stacks` | 该户型所在楼栋与套号（来自官方 UNIT DISTRIBUTION） |
+| `tags` | 推荐引擎匹配标签（如 `short-lease` / `compact` / `family`） |
+| `grid` | 3D 模型中样本单元位置：`block` 楼栋、`floor` 楼层 |
 
 ## 项目记录 / Work log（每个任务：Issue → PR → Merge）
 
@@ -75,12 +77,14 @@ node tests/recommend.test.mjs   # 或 npm test
 | 2026-11-05 | 修正发布启用指南 Issue 引用（#2 → #3） | [#4](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/4) | [#5](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/5) |
 | 2026-11-05 | 补充网页端创建 deploy.yml 的分步指引 | [#6](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/6) | [#7](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/7) |
 | 2026-11-05 | 启用 GitHub Pages 发布（管理员操作）+ 线上验收 | [#3](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/3) | —（网页端启用，验收记录见 Issue） |
+| 2026-11-06 | 接入真实资料：Berlayar Rise 数据与沙盘实拍 | [#12](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/12) | [#13](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/13) |
 | 2026-11-05 | 修复 3D 降级路径：详情自动填充 + 隐藏无效操作提示 | [#8](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/8) | [#9](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/9) |
 | 2026-11-05 | 创建原始素材存放目录 materials/（PDF + 沙盘照片） | [#10](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/issues/10) | [#11](https://github.com/yuhaitao521ok-design/Berlayer-Rise-Virtual-View-and-Unit-Recommendation/pull/11) |
 
 ## 后续计划 / Next
 
-- [ ] 接入上传的楼盘图片素材（效果图 / 样板间 / 总平面图）
-- [ ] 用官方房源详细信息替换 `data/units.json` 示例数据
+- [x] 接入上传的楼盘图片素材（7 张沙盘实拍 → `assets/images/sandbox-01..07.jpg`）
+- [x] 用官方房源详细信息替换 `data/units.json` 示例数据（HDB 2026 年 6 月 BTO 手册）
+- [ ] 官方价格/面积公布后回填 `units.json`（`priceFrom` / `areaSqm`）
 - [ ] 增加楼栋 / 楼层切换与室内 360° 全景看房
 - [ ] 推荐结果导出与分享

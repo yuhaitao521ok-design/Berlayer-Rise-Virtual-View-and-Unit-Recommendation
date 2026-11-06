@@ -1,61 +1,47 @@
 /**
- * Unit recommendation engine — pure logic, no DOM, no dependencies.
- * Used by the website (js/main.js) and by node tests (tests/recommend.test.mjs).
+ * Flat-type recommendation engine for Berlayar Rise (HDB BTO, June 2026).
+ * Pure logic — no DOM, no dependencies. Prices and areas may be null (TBA at launch).
  */
 
-/** Priority id -> matcher returning a human-readable reason when the unit fits. */
+/** Priority id -> matcher returning a human-readable reason when the flat fits. */
 const PRIORITIES = {
-  sunlight: (unit) => {
-    if (['S', 'W', 'SW'].includes(unit.aspect) || unit.tags.includes('sunlight')) {
-      return 'Bright home with good daylight through the day';
-    }
-    if (unit.tags.includes('sunset')) {
-      return 'Warm evening light';
-    }
+  space: (unit) => {
+    if (unit.bedrooms >= 3) return `布局宽敞（${unit.bedrooms} 间卧室），适合家庭成长`;
+    if (unit.bedrooms === 2) return '两间卧室，育儿 / 居家办公两相宜';
     return null;
   },
-  quiet: (unit) => {
-    if (unit.tags.includes('quiet')) {
-      return 'Quieter position, away from the street';
-    }
-    if (unit.floor >= 2) {
-      return 'Higher floor means less street noise';
-    }
-    return null;
-  },
-  views: (unit) => {
-    if (unit.tags.includes('views') || unit.floor >= 2) {
-      return 'Elevated outlook over the landscaped grounds';
-    }
-    return null;
-  },
-  accessibility: (unit) =>
-    unit.tags.includes('step-free')
-      ? 'Step-free access, close to the entrance and parking'
+  views: (unit) =>
+    (unit.blocks || []).some((b) => ['201A', '200B'].includes(b))
+      ? '位于 48–49 层高塔楼（Blk 201A / 200B），视野与通风俱佳'
       : null,
-  outdoor: (unit) => {
-    if (unit.tags.includes('terrace')) {
-      return 'Private terrace';
-    }
-    if (unit.tags.includes('balcony')) {
-      return 'Private balcony';
-    }
-    if (unit.tags.includes('garden')) {
-      return 'Own ground-floor garden';
-    }
-    return null;
-  },
+  flexi: (unit) =>
+    (unit.tags || []).includes('short-lease')
+      ? '可选 55/45 年短租期（Short Lease），适合年长买家'
+      : null,
+  choice: (unit) =>
+    (unit.blocks || []).length >= 4
+      ? `分布在 ${unit.blocks.length} 座楼栋、套号充足，抽签选择余地更大`
+      : null,
+  value: (unit) =>
+    (unit.tags || []).includes('compact')
+      ? '小户型上手门槛更低（总价待发售公告）'
+      : null,
 };
 
 export const PRIORITY_OPTIONS = Object.keys(PRIORITIES);
 
-/** Format a price as GBP, e.g. 289000 -> "£289,000". */
+/** Format a price as SGD, e.g. 450000 -> "S$450,000". */
 export function formatPrice(value) {
-  return `£${Number(value).toLocaleString('en-GB')}`;
+  return `S$${Number(value).toLocaleString('en-SG')}`;
+}
+
+/** Human-readable price line (handles TBA prices). */
+export function priceText(unit) {
+  return unit.priceFrom == null ? '价格待发售公告' : `${formatPrice(unit.priceFrom)} 起`;
 }
 
 /**
- * Score one unit against the buyer's preferences.
+ * Score one flat type against the buyer's preferences.
  * @param {object} unit  a unit entry from data/units.json
  * @param {{budget?: number, householdSize?: number, priorities?: string[]}} prefs
  * @returns {{score: number, reasons: string[]}}
@@ -64,40 +50,42 @@ export function scoreUnit(unit, prefs = {}) {
   const reasons = [];
   let score = 0;
 
-  // Budget: staying within budget is the strongest single signal.
+  // Budget (advisory when prices are not yet announced).
   const budget = Number(prefs.budget) || 0;
   if (budget > 0) {
-    if (unit.priceFrom <= budget) {
+    if (unit.priceFrom == null) {
+      reasons.push('价格待 HDB 发售公告，建议先按家庭需求筛选');
+    } else if (unit.priceFrom <= budget) {
       score += 25;
-      reasons.push(`Within your budget (guide price ${formatPrice(unit.priceFrom)})`);
+      reasons.push(`在预算内（${formatPrice(unit.priceFrom)} 起）`);
     } else {
       const over = (unit.priceFrom - budget) / budget;
       if (over <= 0.1) {
         score += 8;
-        reasons.push(`Slightly over budget by ${Math.round(over * 100)}% — worth a viewing`);
+        reasons.push(`略超预算 ${Math.round(over * 100)}%，值得看房`);
       } else {
         score -= 15;
-        reasons.push(`Over budget by ${Math.round(over * 100)}%`);
+        reasons.push(`超出预算 ${Math.round(over * 100)}%`);
       }
     }
   }
 
-  // Household fit: match bedroom count to the size of the household.
+  // Household fit against bedroom count.
   const household = Math.max(1, Number(prefs.householdSize) || 2);
-  const idealBeds = household <= 1 ? 1 : household <= 2 ? 2 : household <= 4 ? 3 : 4;
+  const idealBeds = household <= 1 ? 1 : household <= 2 ? 2 : 3;
   const shortfall = idealBeds - unit.bedrooms;
   if (shortfall === 0) {
     score += 20;
-    reasons.push(`Good size match for ${household} ${household === 1 ? 'person' : 'people'}`);
+    reasons.push(`卧室数量匹配 ${household} 人家庭`);
   } else if (shortfall < 0) {
     score += 12;
-    reasons.push('Extra bedrooms — useful for guests or a home office');
+    reasons.push('多一间房——客房或居家办公更从容');
   } else if (shortfall === 1) {
     score += 2;
-    reasons.push(`One bedroom fewer than ideal — workable for ${household}`);
+    reasons.push(`少一间卧室，${household} 人家庭可作弹性安排`);
   } else {
     score -= 6 * shortfall;
-    reasons.push(`May feel tight for ${household} people (${unit.bedrooms} bed)`);
+    reasons.push(`${household} 人家庭住 ${unit.bedrooms} 房可能偏紧`);
   }
 
   // Priorities chosen by the buyer.
@@ -111,21 +99,21 @@ export function scoreUnit(unit, prefs = {}) {
     }
   }
 
-  // Space bonus: unusually generous layouts score higher.
-  if (unit.areaSqm >= 28 + unit.bedrooms * 22) {
+  // Space bonus when the official area is known and generous.
+  if (unit.areaSqm != null && unit.areaSqm >= 28 + unit.bedrooms * 22) {
     score += 5;
-    reasons.push(`Generous living space (${unit.areaSqm} m²)`);
+    reasons.push(`空间充裕（${unit.areaSqm} m²）`);
   }
 
   return { score, reasons: reasons.slice(0, 5) };
 }
 
 /**
- * Rank all units for a set of preferences.
+ * Rank all flat types for a set of preferences.
  * @returns {Array<{unit: object, score: number, reasons: string[]}>}
  */
 export function recommendUnits(units, prefs = {}) {
   return units
     .map((unit) => ({ unit, ...scoreUnit(unit, prefs) }))
-    .sort((a, b) => b.score - a.score || a.unit.priceFrom - b.unit.priceFrom);
+    .sort((a, b) => b.score - a.score || (a.unit.priceFrom ?? 0) - (b.unit.priceFrom ?? 0));
 }
