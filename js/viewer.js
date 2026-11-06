@@ -14,6 +14,28 @@ const TYPE_COLORS = {
   '4R': '#f2d96b',
 };
 
+/** Procedural facade: dark glass, white vertical strips, window grid (like the sales model). */
+function facadeTexture(repeatY) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#39424b';
+  ctx.fillRect(0, 0, 128, 256);
+  ctx.fillStyle = '#e9e6df';
+  for (let x = 0; x < 128; x += 32) ctx.fillRect(x, 0, 12, 256);
+  ctx.fillStyle = '#93a9bb';
+  for (let y = 10; y < 256; y += 20) {
+    for (let x = 16; x < 128; x += 32) ctx.fillRect(x, y, 12, 11);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.repeat.set(2, repeatY);
+  return texture;
+}
+
 function addTree(scene, x, z, scale = 1) {
   const trunk = new THREE.Mesh(
     new THREE.CylinderGeometry(0.22 * scale, 0.34 * scale, 2.2 * scale, 8),
@@ -47,13 +69,13 @@ export function createViewer({ canvas, blocks = [], units = [], onSelect, onErro
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#dce8f0');
-  scene.fog = new THREE.Fog('#dce8f0', 120, 340);
+  scene.fog = new THREE.Fog('#dce8f0', 130, 360);
 
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 800);
-  camera.position.set(54, 44, 68);
+  camera.position.set(46, 36, 60);
 
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.set(0, 18, 0);
+  controls.target.set(0, 15, 4);
   controls.enableDamping = true;
   controls.maxPolarAngle = Math.PI * 0.49;
   controls.minDistance = 26;
@@ -88,30 +110,22 @@ export function createViewer({ canvas, blocks = [], units = [], onSelect, onErro
   path.receiveShadow = true;
   scene.add(path);
 
-  [-46, -30, 30, 46].forEach((x, i) => addTree(scene, x, 26 + (i % 2) * 12, 1 + (i % 3) * 0.18));
-  [-48, -32, 32, 48].forEach((x, i) => addTree(scene, x, -20 - (i % 2) * 10, 1.1 + (i % 2) * 0.2));
-
-  // Six residential blocks with real storey counts (massing is indicative).
+  // Six residential blocks with real storey counts (facade pattern like the sales model).
   const towerSpacing = TOWER_W + TOWER_GAP;
   const baseX = -((blocks.length - 1) * towerSpacing) / 2;
-  const towerMaterial = new THREE.MeshStandardMaterial({ color: '#8d9aa8', roughness: 0.68, metalness: 0.08 });
-  const finMaterial = new THREE.MeshStandardMaterial({ color: '#5c6b7a', roughness: 0.7, metalness: 0.1 });
   const terraceMaterial = new THREE.MeshStandardMaterial({ color: '#e8e2d2', roughness: 0.9 });
   const roofMaterial = new THREE.MeshStandardMaterial({ color: '#7fa267', roughness: 1 });
 
   blocks.forEach((block, index) => {
     const x = baseX + index * towerSpacing;
     const height = block.storeys * FLOOR_H;
-    const tower = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W, height, TOWER_D), towerMaterial);
+    const texture = facadeTexture(Math.max(2, Math.round(block.storeys / 8)));
+    const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.6, metalness: 0.15 });
+    const tower = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W, height, TOWER_D), material);
     tower.position.set(x, height / 2, 0);
     tower.castShadow = true;
     tower.receiveShadow = true;
     scene.add(tower);
-
-    const fin = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W * 0.45, height, TOWER_D + 0.5), finMaterial);
-    fin.position.set(x, height / 2, 0);
-    fin.castShadow = true;
-    scene.add(fin);
 
     for (const storey of block.skyTerraces || []) {
       const slab = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 1.4, 0.5, TOWER_D + 1.4), terraceMaterial);
@@ -128,6 +142,44 @@ export function createViewer({ canvas, blocks = [], units = [], onSelect, onErro
     }
   });
 
+  // MSCP podium with roof garden (like the sales model's low green-roofed block).
+  const podium = new THREE.Mesh(
+    new THREE.BoxGeometry(46, 5, 13),
+    new THREE.MeshStandardMaterial({ color: '#cfcabd', roughness: 0.85 })
+  );
+  podium.position.set(0, 2.5, 26);
+  podium.castShadow = true;
+  podium.receiveShadow = true;
+  scene.add(podium);
+  const podiumRoof = new THREE.Mesh(
+    new THREE.BoxGeometry(46.6, 0.6, 13.6),
+    new THREE.MeshStandardMaterial({ color: '#7fa267', roughness: 1 })
+  );
+  podiumRoof.position.set(0, 5.3, 26);
+  podiumRoof.castShadow = true;
+  scene.add(podiumRoof);
+
+  // Circular community building (Blk 203 in the model).
+  const pavilion = new THREE.Mesh(
+    new THREE.CylinderGeometry(6, 6, 3.4, 32),
+    new THREE.MeshStandardMaterial({ color: '#d9d3c4', roughness: 0.8 })
+  );
+  pavilion.position.set(-32, 1.7, 20);
+  pavilion.castShadow = true;
+  pavilion.receiveShadow = true;
+  scene.add(pavilion);
+  const pavilionRoof = new THREE.Mesh(
+    new THREE.CylinderGeometry(6.4, 6.4, 0.5, 32),
+    new THREE.MeshStandardMaterial({ color: '#4a5560', roughness: 0.7 })
+  );
+  pavilionRoof.position.set(-32, 3.6, 20);
+  pavilionRoof.castShadow = true;
+  scene.add(pavilionRoof);
+
+  [-46, -30, -18, 18, 30, 46].forEach((x, i) => addTree(scene, x, 26 + (i % 2) * 12, 1 + (i % 3) * 0.18));
+  [-48, -32, -16, 16, 32, 48].forEach((x, i) => addTree(scene, x, -20 - (i % 2) * 10, 1.1 + (i % 2) * 0.2));
+  [-24, -8, 8, 24].forEach((x, i) => addTree(scene, x, 38 + (i % 2) * 6, 0.9 + (i % 2) * 0.25));
+
   // Clickable flat-type sample units, placed on blocks where they really exist.
   const meshes = [];
   const byId = new Map();
@@ -139,7 +191,7 @@ export function createViewer({ canvas, blocks = [], units = [], onSelect, onErro
     const y = (unit.grid && unit.grid.floor ? unit.grid.floor : 10) * FLOOR_H;
     const color = TYPE_COLORS[unit.id] || '#f6b26b';
     const material = new THREE.MeshStandardMaterial({ color, roughness: 0.55 });
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 1, 2.2, TOWER_D + 1), material);
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(TOWER_W + 0.8, 1.8, TOWER_D + 0.8), material);
     mesh.position.set(x, y, 0);
     mesh.castShadow = true;
     mesh.userData.unitId = unit.id;

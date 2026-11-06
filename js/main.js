@@ -149,21 +149,17 @@ function initFullscreen() {
   const layout = $('.viewer-layout');
   const button = $('#viewer-fullscreen');
   if (!layout || !button) return;
-  const requestFs = layout.requestFullscreen || layout.webkitRequestFullscreen;
-  const exitFs = document.exitFullscreen || document.webkitExitFullscreen;
-  const current = () => document.fullscreenElement || document.webkitFullscreenElement;
-  button.addEventListener('click', () => {
-    if (current()) {
-      if (exitFs) exitFs.call(document);
-    } else if (requestFs) {
-      requestFs.call(layout);
+  const toggle = () => {
+    const active = layout.classList.toggle('is-page-fullscreen');
+    document.body.classList.toggle('no-scroll', active);
+    button.textContent = active ? '✕ 退出全屏 Exit' : '⛶ 全屏 Fullscreen';
+  };
+  button.addEventListener('click', toggle);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && layout.classList.contains('is-page-fullscreen')) {
+      toggle();
     }
   });
-  const sync = () => {
-    button.textContent = current() ? '✕ 退出全屏 Exit' : '⛶ 全屏 Fullscreen';
-  };
-  document.addEventListener('fullscreenchange', sync);
-  document.addEventListener('webkitfullscreenchange', sync);
 }
 
 async function init() {

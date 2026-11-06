@@ -74,7 +74,7 @@
     <section id="virtual-view" class="section">
       <header class="section-head">
         <h2>Virtual View <span class="zh">云端三维看房</span></h2>
-        <p>6 座塔楼按真实楼层数建模（Blk 200A 46 层 … 204B 33 层），白色横带为空中花园层、顶层绿块为屋顶花园；点击彩色户型块查看该户型详情。体量比例为示意。</p>
+        <p>6 座塔楼按真实楼层数建模（Blk 200A 46 层 … 204B 33 层），白色横带为空中花园层、顶层绿块为屋顶花园；点击彩色户型块查看该户型详情。3D 为体量与户型位置示意，外观细节以「沙盘实拍」为准。</p>
       </header>
       <div class="viewer-layout">
         <div class="viewer-stage">
@@ -82,8 +82,10 @@
           <div class="viewer-fallback" id="viewer-fallback" hidden>
             <p>3D 视图当前不可用（浏览器不支持 WebGL），请使用下方「沙盘实拍」与户型列表查看。3D view is unavailable in this browser (WebGL not supported).</p>
           </div>
-          <button class="btn btn-small viewer-fullscreen-btn" id="viewer-fullscreen" type="button" title="网页全屏 Fullscreen">⛶ 全屏 Fullscreen</button>
-          <p class="viewer-hint">Left-drag rotate · Right-drag pan · Scroll zoom · Click a colour block to select</p>
+          <div class="viewer-overlay">
+            <p class="viewer-hint">Left-drag rotate · Right-drag pan · Scroll zoom · Click a colour block to select</p>
+            <button class="btn btn-small viewer-fullscreen-btn" id="viewer-fullscreen" type="button" title="网页全屏 Fullscreen">⛶ 全屏 Fullscreen</button>
+          </div>
         </div>
         <aside class="viewer-side">
           <label class="field">
